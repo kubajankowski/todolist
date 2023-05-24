@@ -137,15 +137,16 @@ namespace v2todo
                     while ((line = reader.ReadLine()) != null)
                     {
                         // Przetwarzaj każdą linię z pliku
-                        // Zakładając, że linia ma format: "Tytuł: <tytuł zadania>, Termin: <data>"
-                        string[] parts = line.Split(new[] { "Tytuł: ", ", Termin: " }, StringSplitOptions.RemoveEmptyEntries);
-                        if (parts.Length == 2)
+                        // Zakładając, że linia ma format: "Tytuł: <tytuł zadania>, Termin: <data>, Opis: <opis zadania>"
+                        string[] parts = line.Split(new[] { "Tytuł: ", ", Termin: ", ", Opis: " }, StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length == 3)
                         {
                             string title = parts[0];
                             string dueDate = parts[1];
+                            string description = parts[2];
 
                             // Dodaj wpis do listy
-                            ToDoEntry newEntry = new ToDoEntry { Title = title, DueDate = DateTime.Parse(dueDate) };
+                            ToDoEntry newEntry = new ToDoEntry { Title = title, DueDate = DateTime.Parse(dueDate), Description = description };
                             entries.Add(newEntry);
 
                             // Dodaj element do widoku listy
@@ -158,6 +159,7 @@ namespace v2todo
                 MessageBox.Show("Lista zadań została zaimportowana.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
 
         private void btnExport_Click(object sender, EventArgs e)
         {
